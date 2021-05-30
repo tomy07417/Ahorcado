@@ -5,10 +5,15 @@ from unicodedata import normalize
 
 def sacar_tildes(palabra):
     palabra = palabra.upper()
-    string_s = palabra.replace('Ñ', '@')
-    o_string = normalize("NFKD", string_s).encode("ascii","ignore").decode("ascii")
-    string_n = o_string.replace('@', 'Ñ')
-    return string_n
+    palabra_sin = ''
+    diccionario = {"Á": "A" , "É": "E" , "Í": "I", "Ó": "O" , "Ú": "U"} 
+    for letra in palabra:
+        if letra in diccionario:
+            palabra_sin += diccionario[letra]
+        else:
+            palabra_sin += letra
+    
+    return palabra_sin
 
 
 def palabras_validas(texto):

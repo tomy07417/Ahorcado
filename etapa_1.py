@@ -5,6 +5,14 @@ def Calcular_palabra(palabra):
     return xd
 
 def Construir_palabra(palabra_a_adivinar, palabra_con_signos_de_pregunta, letra):
+    """
+    Toma la palabra original, la palabra q tienen los "?" y letras que ya haya adivinado, y la letra q haya ingresado el usuario en la ultima carga; genera 
+    una nueva palabra en la cual, se va a ir fijando en cada posicion de la palabra que tine q adivinar el 
+    usuario, y si la letra de la palabra coincide con la letra que se ingresa por parametro, en la nueva palabra, se
+    le va a asignar la letra, en cualquier otro caso, se le va a asignar la letra o en su defecto un "?", que 
+    haya en la palabra con signos de pregunta
+    """
+
     palabra_nueva = ''
     for i in range(len(palabra_con_signos_de_pregunta)):
         if palabra_a_adivinar[i] == letra:
@@ -25,6 +33,9 @@ def Existe_letra(letra, palabra):
 
 
 def Ingreso_Valido(letra):
+    """
+    Cambié para que tambien se fije que están ingresando solo letras
+    """
     resp = False
     if len(letra) == 1 and letra.isalpha():
         resp = True
@@ -79,13 +90,13 @@ def juego(palabra_a_adivinar):
                print("Aciertos:", acierto_desacierto[0], " -  Desaciertos:", acierto_desacierto[1], end = " ;  ")
                print("Letras no acertadas:", letras_no_acertadas)
     
-    if acierto_desacierto[1] == 8 :
+    if not "?" in palabra_con_signos_de_pregunta :
+        print("Bien!! Adivinaste la palabra!! <3 <3")
 
+    elif acierto_desacierto[1] == 8:
         print("La palabra era:", palabra_a_adivinar)
 
-    else:
-
-        print("Bien!! Adivinaste la palabra!! <3 <3")
+        
 
 
     puntos = acierto_desacierto[0] * 10 + acierto_desacierto[1] * (-5)
