@@ -6,7 +6,7 @@ from unicodedata import normalize
 def sacar_tildes(palabra):
     palabra = palabra.upper()
     string_s = palabra.replace('Ñ', '@')
-    o_string = normalize('NFC',string_s)
+    o_string = normalize("NFKD", string_s).encode("ascii","ignore").decode("ascii")
     string_n = o_string.replace('@', 'Ñ')
     return string_n
 
@@ -40,3 +40,5 @@ def crear_diccionario(texto):
     return dict(sorted(diccionario_palabras.items(), key=lambda palabra: palabra[0]))
 
 
+texto = 'édfadfa sdlfséñ'
+print(palabras_validas(texto))
