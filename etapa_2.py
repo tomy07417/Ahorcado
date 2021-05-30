@@ -43,7 +43,3 @@ def crear_diccionario(texto):
             diccionario_palabras[palabra] = 1
 
     return dict(sorted(diccionario_palabras.items(), key=lambda palabra: palabra[0]))
-
-
-texto = 'édfadfa sdlfséñ'
-print(palabras_validas(texto))
