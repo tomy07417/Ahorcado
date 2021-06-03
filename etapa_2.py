@@ -1,6 +1,4 @@
 import re
-from unicodedata import normalize
-
 
 
 def sacar_tildes(palabra):
@@ -43,3 +41,4 @@ def crear_diccionario(texto):
             diccionario_palabras[palabra] = 1
 
     return dict(sorted(diccionario_palabras.items(), key=lambda palabra: palabra[0]))
+

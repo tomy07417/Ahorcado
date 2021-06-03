@@ -11,6 +11,7 @@ def main():
         texto = obtener_texto()
         diccionarios = etapa_2.crear_diccionario(texto)
         palabra = etapa_3.seleccion_palabra(diccionarios)
+        print(palabra)
         puntos += etapa_1.juego(palabra)
         jugar = input("¿Quiere seguir jugando? (s/n): ")
     
@@ -24,9 +25,4 @@ def main():
 
 
 main()
-
-
-
-
-
 
