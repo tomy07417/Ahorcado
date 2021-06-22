@@ -1,16 +1,21 @@
 
 
 def calcular_palabra(palabra):
-    xd = "?"*len(palabra)
-    return xd
+    '''
+    Toma la palabra que se tiene que adivinar y con la longitud de esa palabra
+    se genera una cadena que tenga por caracteres únicamente signos de interrogación.
+    
+    Autor: Pablo Dominguez
+    '''
+    palabra_adivinando = "?"*len(palabra)
+
+    return palabra_adivinando
 
 def construir_palabra(datos):
     """
-    Toma la palabra original, la palabra q tienen los "?" y letras que ya haya adivinado, y la letra q haya ingresado el usuario en la ultima carga; genera 
-    una nueva palabra en la cual, se va a ir fijando en cada posicion de la palabra que tine q adivinar el 
-    usuario, y si la letra de la palabra coincide con la letra que se ingresa por parametro, en la nueva palabra, se
-    le va a asignar la letra, en cualquier otro caso, se le va a asignar la letra o en su defecto un "?", que 
-    haya en la palabra con signos de pregunta
+    Esta función reemplaza los signos de interrogación por la letra ingresada por el usuario.
+    
+    Autor: Pablo Dominguez
     """
     palabra_a_adivinar = datos["palabra"]
     palabra_con_signos_de_pregunta = datos["palabra adivinando"]
@@ -25,130 +30,147 @@ def construir_palabra(datos):
 
     return palabra_nueva
 
-def letra_en_palabra(letra, palabra):
-    return letra in palabra
-
 def ingreso_valido(letra):
-    """
-    """
+    '''
+    La función toma el ingreso del usuario y se fija si es una única letra.
+    
+    Autor: Pablo Dominguez
+    '''
     resp = False
     if len(letra) == 1 and letra.isalpha():
         resp = True
 
     return resp
 
-def agregar_letra_no_acertada(letras_no_acertadas, letra):
+def letra_en_cadena(letra, palabra):
+    '''
+    Comprueba si la letra está en la palabra.
     
-    if not letra in letras_no_acertadas :
-        letras_no_acertadas += letra + " "
-    
-    return letras_no_acertadas
+    Autor: Pablo Dominguez
+    '''
+    return letra in palabra
 
+def letra_ya_ingresada_y_es_valida(datos, diccionario):
+    '''
+    La función determina si el ingreso es valido y si está en la palabra que contiene los signos de
+    interrogación.
 
-#NUEVO!!
-
-def letra_ya_ingresada_y_es_valida(datos):
-    resp = True
-    resp = resp and datos["ingreso valido"]
-    resp = resp and letra_en_palabra(datos["letra"], datos["palabra"])
-    resp = resp and letra_en_palabra(datos["letra"], datos["palabra adivinando"])
+    Autor: Gonzalo Bacigalupo
+    '''
+    resp = datos["ingreso valido"]
+    resp = resp and letra_en_cadena(datos["letra"], diccionario["palabra_signos"])
     return resp
 
-def procesar_letra_ingresada(datos):
 
-    if datos["letra"] in datos["palabra"]:
-        datos["palabra adivinando"] = construir_palabra(datos)        
-        datos["aciertos"] += 1
-        datos["acertó"] = True
-    elif not datos["letra"] in datos["letras no acertadas"]:
-        #letra no ingresada y que no está en la palabra
-        datos["letras no acertadas"] += datos["letra"] 
-        datos["desaciertos"] +=1
+
+def mostrar_en_pantalla(datos, diccionario):
+    '''
+    Le muestra al usuario los datos por pantalla, dependiendo el caso en el que se encuentre.
     
-    else: #para q no imprima mas de una vez una letra q no está en la palabra
-        datos["desaciertos"] +=1
+    Autor: Gonzalo Bacigalupo
+    '''
+    if datos["tipo de ingreso"] == 'primer ingreso' : 
+        print("Palabra a adivinar:", end = " ")
+    
+    elif datos["tipo de ingreso"] == True:
 
-
-    return datos
-
-def mostrar_en_pantalla(datos):
-    if datos["acertó"]:
         print("Bien!! ->  ", end = " ")
         
-    elif not datos["acertó"] and datos["ingreso valido"]:
+    elif datos["tipo de ingreso"] == False:
+
         print("Lo siento!!! -> ", end = " ")
     
-    else: # para la primera pasada: muestra los datos iniciales!
-        print("Palabra a adivinar:", end = " ")
-
-    print(datos["palabra adivinando"], end = "  ") 
-    print("Aciertos:", datos["aciertos"], "  -   Desaciertos:", datos["desaciertos"], end = "  ")
-    print("Letras no acertadas:", datos["letras no acertadas"])
 
 
-    pass
+    print(diccionario["palabra_signos"], end = "  ") 
+    print("Aciertos:", diccionario["aciertos"], "  -   Desaciertos:", diccionario["desaciertos"], end = "  ")
+    print("Letras no acertadas:", diccionario["letras_no_acertadas"])
 
-def resultados(datos):
-    if not "?" in datos["palabra adivinando"]:
-        print("Bien!! Adivinaste la palabra!! <3 <3")
 
-    else:
-        print("La palabra era:", datos["palabra"])
+def procesar_letra_ingresada(datos, diccionario):
+    '''
+    Modifica los datos del diccionario datos según corresponda, ya sea que se ingresó una letra
+    que está en la palabra a adivinar, si es una letra que no está en la palabra o si es una letra
+    que ya fue ingresada y que no se encuentra en la palabra.
     
-    pass
+    Autor: Gonzalo Bacigalupo   
+    '''
+    if letra_en_cadena(datos["letra"],diccionario["palabra"]):
+        diccionario["palabra_signos"] = construir_palabra(datos)        
+        diccionario["aciertos"] += 1
+        diccionario["letras_acertadas"] += (datos["letra"])
+        datos["tipo de ingreso"] = True
 
-def seguir(datos):
-    resp = True
-    resp = resp and   datos["desaciertos"] <= 7  
-    resp = resp and    "?" in datos["palabra adivinando"] 
-    resp = resp and   datos["seguir"] == "si"
-
+    elif not letra_en_cadena(datos["letra"], datos["letras no acertadas"]):
+        diccionario["letras_no_acertadas"] += datos["letra"]
+        diccionario["desaciertos"] += 1
+    
+    else: 
+        diccionario["desaciertos"] += 1
+    
+    resp = (datos, diccionario)
+    
     return resp
 
 
 
-def juego(palabra):
-    palabra_con_signos_de_pregunta = calcular_palabra(palabra)
-    datos = {"aciertos": 0, 
-            "desaciertos": 0, 
-            "palabra": palabra, 
-            "palabra adivinando": palabra_con_signos_de_pregunta,
-            "letras no acertadas": '',
-            "seguir": "si",
-            "letra": '',
-            "acertó": '',
-            "ingreso valido": ''
+def seguir(datos, diccionario):
+    '''
+    Devuelve un booleano, que depende de los datos que se toman del diccionario 
+    "datos".
+
+    Autor: Franco Singh
+    '''
+    resp = diccionario["desaciertos"] != datos["desaciertos"]  
+    resp = resp and  "?" in diccionario["palabra_signos"] 
+
+    return resp
+
+
+def juego(diccionario):
+    '''
+    Esta función es el juego en sí, pide el ingreso de letras y las
+    evalua, para devolver el puntaje correspondiente a los ingresos que se hacen.
+    
+    Autor: Renata Pastorini
+    '''
+
+    datos = {"letra": '',
+            "tipo de ingreso": 'primer ingreso',
+            "ingreso valido": '',
+            "desaciertos": diccionario["desaciertos"]
             }
         
     mostrar_en_pantalla(datos)
 
     while seguir(datos):
 
-        datos["letra"] = input("Ingrese una letra (0 o FIN para terminar la partida): ").upper()
-        datos["acertó"] = False
+        datos["letra"] = input("Ingrese una letra: ").upper()
+        datos["tipo de ingreso"] = False
         datos["ingreso valido"] = ingreso_valido(datos["letra"])
 
-        if letra_ya_ingresada_y_es_valida(datos):
-        #el ingreso es valido, la letra está en la palabra a adivinar y ya la habías ingresado:
-            print("La letra que queres ingresar ya fue ingresada, intenta con otra: ")
+        if letra_ya_ingresada_y_es_valida(datos, diccionario): 
+            datos["tipo de ingreso"] = 'letra ya ingresada'
+            print("La letra que queres ingresar ya fue ingresada!! -> ", end = " ")
+            
+        elif datos["ingreso valido"]: 
+            dato =  procesar_letra_ingresada(datos, diccionario)
+            datos = dato[0]
+            datos = dato[1]
+
+
+        else:   
+            datos["tipo de ingreso"] = 'ingreso invalido'
+            print("Ingreso invalido, debe ingresar una única letra! -> ", end = " ")
         
-        elif datos["ingreso valido"]:
-       #el ingreso es valido, la letra está en la palabra a adivinar y todavía no la habías ingresado:
-           datos = procesar_letra_ingresada(datos)
-        
-        elif datos["letra"] == "FIN" or datos["letra"] == "0":
-            datos["seguir"] = "no"
-            print("Fin de la partida.")
-        
-        else:
-            #el ingreso no es valido
-            print("Debe ingresar una única letra.")
         
         mostrar_en_pantalla(datos)
-        
-    resultados(datos)
-    
-    puntos = datos["aciertos"] * 10 + datos["desaciertos"] * (-5)
+        print('') 
 
-    return puntos
+
     
+    return diccionario
+    
+
+
+
