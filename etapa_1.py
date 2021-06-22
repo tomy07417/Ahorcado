@@ -1,10 +1,10 @@
 
 
-def Calcular_palabra(palabra):
+def calcular_palabra(palabra):
     xd = "?"*len(palabra)
     return xd
 
-def Construir_palabra(datos):
+def construir_palabra(datos):
     """
     Toma la palabra original, la palabra q tienen los "?" y letras que ya haya adivinado, y la letra q haya ingresado el usuario en la ultima carga; genera 
     una nueva palabra en la cual, se va a ir fijando en cada posicion de la palabra que tine q adivinar el 
@@ -28,7 +28,7 @@ def Construir_palabra(datos):
 def letra_en_palabra(letra, palabra):
     return letra in palabra
 
-def Ingreso_Valido(letra):
+def ingreso_valido(letra):
     """
     """
     resp = False
@@ -57,7 +57,7 @@ def letra_ya_ingresada_y_es_valida(datos):
 def procesar_letra_ingresada(datos):
 
     if datos["letra"] in datos["palabra"]:
-        datos["palabra adivinando"] = Construir_palabra(datos)        
+        datos["palabra adivinando"] = construir_palabra(datos)        
         datos["aciertos"] += 1
         datos["acertó"] = True
     elif not datos["letra"] in datos["letras no acertadas"]:
@@ -108,7 +108,7 @@ def seguir(datos):
 
 
 def juego(palabra):
-    palabra_con_signos_de_pregunta = Calcular_palabra(palabra)
+    palabra_con_signos_de_pregunta = calcular_palabra(palabra)
     datos = {"aciertos": 0, 
             "desaciertos": 0, 
             "palabra": palabra, 
@@ -126,7 +126,7 @@ def juego(palabra):
 
         datos["letra"] = input("Ingrese una letra (0 o FIN para terminar la partida): ").upper()
         datos["acertó"] = False
-        datos["ingreso valido"] = Ingreso_Valido(datos["letra"])
+        datos["ingreso valido"] = ingreso_valido(datos["letra"])
 
         if letra_ya_ingresada_y_es_valida(datos):
         #el ingreso es valido, la letra está en la palabra a adivinar y ya la habías ingresado:

@@ -1,23 +1,17 @@
 import random
 
 
-def seleccion_palabra(diccionario):
+def seleccion_palabra(diccionario, longitud):
     lista_palabras = list(diccionario.keys())
     lista_palabras_longitud = []
     resp = ''
-    if input("¿Quiere ingresar la longitud de la palabra a adivinar? (s/n): ").upper() == "S" :
-        longitud = int(input("Ingrese la longitud de la palabra a adivinar, debe ser un valor entre 5 y " + str(longitud_palabra_mas_larga(diccionario)) + ": "))
-        for i in range (len(lista_palabras)):
-            if len(lista_palabras[i]) == longitud:
-                lista_palabras_longitud.append(lista_palabras[i]) 
+    for i in range (len(lista_palabras)):
+        if len(lista_palabras[i]) == longitud:
+            lista_palabras_longitud.append(lista_palabras[i]) 
     
-        random_num = random.randint(0, len(lista_palabras_longitud) - 1)
+    random_num = random.randint(0, len(lista_palabras_longitud) - 1)
 
-        resp += lista_palabras_longitud[random_num]
-
-    else:    
-        random_num = random.randint(0, len(lista_palabras) - 1)
-        resp += lista_palabras[random_num]
+    resp += lista_palabras_longitud[random_num]
 
     return resp
     
