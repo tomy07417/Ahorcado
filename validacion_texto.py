@@ -1,7 +1,5 @@
 import re
 
-
-
 def sacar_tildes(palabra):
     '''
     Toma la cadena de caracteres ingresada, transforma en mayusculas todas las letras
@@ -11,7 +9,7 @@ def sacar_tildes(palabra):
     '''
     palabra = palabra.upper()
     palabra_sin = ''
-    diccionario = {"Á": "A" , "É": "E" , "Í": "I", "Ó": "O" , "Ú": "U"} 
+    diccionario = {'Á': 'A' , 'É': 'E' , 'Í': 'I', 'Ó': 'O' , 'Ú': 'U'} 
     
     for letra in palabra:
         if letra in diccionario:
@@ -24,7 +22,7 @@ def sacar_tildes(palabra):
 def palabras_validas(texto):
     '''
     Esta función toma el texto ingresado por parámetro, y devuelve una lista de palabras en la cual se 
-    encuentran todas las palabras "validas", osea aquellas que tienen longitud mayor o igual a cinco.
+    encuentran todas las palabras 'validas', osea aquellas que tienen longitud mayor o igual a cinco.
     
     Autor: Tomás Amundarain
     '''
@@ -63,6 +61,3 @@ def crear_diccionario(texto):
             diccionario_palabras[palabra] = 1
 
     return dict(sorted(diccionario_palabras.items(), key = lambda palabra: palabra[0]))
-
-
-

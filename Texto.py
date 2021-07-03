@@ -1,7 +1,7 @@
 def obtener_texto():
-    """Devuelve un texto compuesto por Cuentos"""
+    '''Devuelve un texto compuesto por Cuentos'''
 
-    texto="""LA CONDENADA
+    texto='''LA CONDENADA
 
 
 Catorce meses llevaba Rafael en la estrecha celda.
@@ -4142,7 +4142,7 @@ pico, ellos dieron los primeros golpes.
 
 
 FIN
-"""
+'''
 
 
     return texto
