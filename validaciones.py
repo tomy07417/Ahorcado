@@ -1,10 +1,9 @@
 
-
 def ingreso_valido(letra):
     '''
     La función toma el ingreso del usuario y se fija si es una única letra.
     
-    Autor: Pablo Dominguez
+    Autor: Franco Singh
     '''
     resp = False
     if len(letra) == 1 and letra.isalpha():
@@ -16,7 +15,7 @@ def letra_en_cadena(letra, palabra):
     '''
     Comprueba si la letra está en la palabra.
     
-    Autor: Pablo Dominguez
+    Autor: Franco Singh
     '''
     return letra in palabra
 
@@ -25,7 +24,7 @@ def letra_ya_ingresada_y_es_valida(datos, diccionario):
     La función determina si el ingreso es valido y si está en la palabra que contiene los signos de
     interrogación.
 
-    Autor: Gonzalo Bacigalupo
+    Autor: Franco Singh
     '''
     resp = datos['ingreso valido']
     resp = resp and letra_en_cadena(datos['letra'], diccionario['palabra_signos'])
@@ -33,21 +32,23 @@ def letra_ya_ingresada_y_es_valida(datos, diccionario):
 
 def seguir(datos, diccionario):
     '''
-    Devuelve un booleano, que depende de los datos que se toman del diccionario 
-    'datos'.
+    Devuelve un booleano, el cual es verdadero si el usuario que actualmente está jugando,
+    tiene que seguir ingresando valoreso, o falso en caso de que se tenga que pasar al siguiente 
+    jugador.
 
     Autor: Franco Singh
     '''
     resp = diccionario['desaciertos'] == datos['desaciertos']  
-            # si los desaciertos son iguales en ambos diccionarios, significa q no se equivocó 
-            # en lo q va d su turno, por lo q puede seguir jugando
+
     resp = resp and  '?' in diccionario['palabra_signos'] 
 
     return resp
 
 def perdieron_todos(jugadores):
     '''
-    si todos los judaores perdieron: la función va a devolver True
+    Esta función determina si todos los jugadores perdieron.
+    
+    Autor: Franco Singh
     '''
     resp = True
     for jugador in jugadores:
@@ -57,7 +58,9 @@ def perdieron_todos(jugadores):
 
 def gano_alguien(jugadores):
     '''
-    La funcion devulve: True si alguien ganó
+    Esta función determina si al menos unos de los jugadores adivinó la palabra.
+    
+    Autor: Franco Singh
     '''
 
     resp = False
@@ -66,13 +69,5 @@ def gano_alguien(jugadores):
     
     return resp
 
-def el_ganador(jugadores):
-    '''
-    esta función se usa sabiendo de hay un gandor!
-    '''
-    for jugador in jugadores:
-        if jugadores[jugador]['gano'] :
-            ganador = jugador
-    
-    return ganador
+
 

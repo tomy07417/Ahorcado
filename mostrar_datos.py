@@ -3,7 +3,8 @@ import validaciones, asignaciones
 
 def mostrar_en_pantalla(datos, diccionario):
     '''
-    Le muestra al usuario los datos por pantalla, dependiendo el caso en el que se encuentre.
+    Le muestra al usuario los datos por pantalla a lo largo de la jugada, 
+    dependiendo el caso en el que se encuentre.
     
     Autor: Gonzalo Bacigalupo
     '''
@@ -24,6 +25,13 @@ def mostrar_en_pantalla(datos, diccionario):
     print('Letras no acertadas:', diccionario['letras_no_acertadas'])
 
 def resultados_parciales(jugadores, cant_partidas):
+    """
+    Al finalizar cada partida, se llama a esta función para que muestre los datos de la partida
+    jugada.
+
+    Autor: Gonzalo Bacigalupo
+    """
+
     print('Cantidad de partidas jugadas: ', cant_partidas)
     for jugador in jugadores:
         print(jugador, 'tenía que adivinar la palabra:', jugadores[jugador]['palabra'], end = '')
@@ -35,21 +43,28 @@ def resultados_parciales(jugadores, cant_partidas):
             print('El puntaje total obtenido: ', jugadores[jugador]['puntos_totales'])
             print('Los aciertos totales: ', jugadores[jugador]['aciertos_totales'])
             print('Los desaciertos totales: ', jugadores[jugador]['desaciertos_totales'])
-            print('Adivinó: ', jugadores[jugador]['cant_palabras_adivinadas'] ,'palabras.')
+            print('Adivinó: ', jugadores[jugador]['cant_palabras_adivinadas'] ,'palabra/s.')
 
-def final_partida(jugadores, cant_partidas):
+def final_partida(jugadores, cant_partidas, PUNTOS_ADIVINA_PALABRA, PUNTOS_RESTA_GANA_PROGRAMA):
+    """
+    Dependiendo si alguno de los usuarios ganó, modifica de distinta manera los puntajes parciales, 
+    y luego muestra todos los datos con la funcion anteriormente explicada.
+
+    Autor: Gonzalo Bacigalupo
+    """
 
     hubo_ganador = validaciones.gano_alguien(jugadores)     
     
     if hubo_ganador:
-        ganador = validaciones.el_ganador(jugadores)
+        ganador = asignaciones.el_ganador(jugadores)
         print('El ganador de esta partida es: ', ganador)
-        jugadores[ganador]['puntos_parciales'] += 10 
+        jugadores[ganador]['puntos_parciales'] += PUNTOS_ADIVINA_PALABRA
+        jugadores[ganador]['cant_palabras_adivinadas'] += 1
     
     else:
         print('Ganó la computadora')
         for jugador in jugadores:
-            jugadores[jugador]['puntos_parciales'] -= 5
+            jugadores[jugador]['puntos_parciales'] -= PUNTOS_RESTA_GANA_PROGRAMA
 
     jugadores = asignaciones.puntajes_totales(jugadores)
 

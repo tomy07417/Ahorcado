@@ -30,20 +30,20 @@ def construir_palabra(datos, diccionario):
 
     return palabra_nueva
 
-def procesar_letra_ingresada(datos, diccionario):
+def procesar_letra_ingresada(datos, diccionario, PUNTOS_ACIERTOS, PUNTOS_DESACIERTOS):
     '''
-    Modifica los datos del diccionario datos según corresponda, ya sea que se ingresó una letra
+    Modifica los datos de los diccionarios "datos" y "diccionario" según corresponda, ya sea que se ingresó una letra
     que está en la palabra a adivinar, si es una letra que no está en la palabra o si es una letra
     que ya fue ingresada y que no se encuentra en la palabra.
     
-    Autor: Gonzalo Bacigalupo   
+    Autor: Pablo Dominguez 
     '''
 
     if validaciones.letra_en_cadena(datos['letra'],diccionario['palabra']):
         diccionario['palabra_signos'] = construir_palabra(datos, diccionario)       
         diccionario['aciertos'] += 1
         diccionario['aciertos_totales'] += 1
-        diccionario['puntos_parciales'] += 2
+        diccionario['puntos_parciales'] += PUNTOS_ACIERTOS
         diccionario['letras_acertadas'] += (datos['letra'])
         datos['tipo de ingreso'] = True
 
@@ -51,12 +51,12 @@ def procesar_letra_ingresada(datos, diccionario):
         diccionario['letras_no_acertadas'] += datos['letra']
         diccionario['desaciertos'] += 1
         diccionario['desaciertos_totales'] += 1
-        diccionario['puntos_parciales'] -= 1
+        diccionario['puntos_parciales'] -= PUNTOS_DESACIERTOS
     
     else: 
         diccionario['desaciertos'] += 1
         diccionario['desaciertos_totales'] += 1
-        diccionario['puntos_parciales'] -= 1
+        diccionario['puntos_parciales'] -= PUNTOS_DESACIERTOS
     
     resp = (datos, diccionario)
     
