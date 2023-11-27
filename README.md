@@ -6,4 +6,4 @@ La idea de este proyecto fue la utilización de los conceptos de la programació
 - Tener python3 intalado
 
 ## Como Funciona
-Descargar el código y ejecutar python3 ./main.py 
+Descargar el código y ejecutar python3 ./principal.py 
